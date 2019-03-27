@@ -11,11 +11,10 @@ app=(()=>{
 	let setContentView=()=>{
 		$.when(
 		$.getScript($.js()+'/component/compo.js'),	
-		
 		$.getScript($.js()+'/employee/emp.js'),
 		$.getScript($.js()+'/common/auth.js')
 		).done(()=>{
-			auth.permission.login();
+			auth.init();
 
 		});
 	}
