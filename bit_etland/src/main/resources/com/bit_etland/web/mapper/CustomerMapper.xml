@@ -13,8 +13,13 @@
         CITY,
         ADDRESS,
         POSTALCODE
-	  FROM CUSTOMERS 
-	  WHERE CUSTOMER_ID LIKE #{customerID} AND PASSWORD LIKE #{password}
+	  FROM CUSTOMERS
+	  WHERE CUSTOMER_ID LIKE #{customerID}
+	  <if test="password != null">
+	   AND PASSWORD LIKE #{password}
+	  	</if>
+	 
+	 
 	  	
 	</select>
 	<insert
