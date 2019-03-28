@@ -9,8 +9,8 @@ public interface EmployeeMapper {
 	public void insertEmployee(Employee emp);
 	
 	public List<Employee> selectEmployeeList();
-	public List<Employee> selectEmployees(String searchWord);
-	public Employee selectEmployee(String searchWord);
+	public List<Employee> selectEmployees(Object o);
+	public Employee selectEmployee(Employee emp);
 	public int countEmployees();
 	public Employee existsEmployee(Employee emp);
 	
