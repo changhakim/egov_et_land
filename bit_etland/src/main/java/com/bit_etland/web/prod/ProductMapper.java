@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductMapper {
-	public void createProduct(Product pro);
+	public void insertProduct(Product pro);
 	public List<Product> selectProductList(Map<?, ?> map);
 	public List<Product> selectProducts(Product pro);
 	public Product selectProduct(Product pro);

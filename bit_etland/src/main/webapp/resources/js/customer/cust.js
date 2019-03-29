@@ -1,7 +1,14 @@
 var cust = cust || {}
 
 cust = (()=>{
+	let _,js,compojs,r_cnt,l_cnt;
 	let init =x=>{
+		_ = $.ctx();
+        js = $.js();
+        compojs = $.js()+'/component/compo.js';
+        r_cnt = '#right_content';
+        l_cnt = '#left_content';
+        
 		onCreate(x);
 	}
 	let onCreate=x=>{
@@ -9,9 +16,60 @@ cust = (()=>{
 	}
 	let setContentView=x=>{
 		$.when(
-		$.getScript($.js()+'/component/compo.js')		
+		$.getScript(compojs)		
 		).done(()=>{
-			 $('#right_content').html(compo.cust_mypage())
+			$(l_cnt+' ul.nav').empty()
+			let aa=[{name:'cusupdate',txt:'정보수정'},
+				{name:'withdrawal',txt:'회원탈퇴'},
+				{name:'shopping',txt:'쇼핑몰'},
+				{name:'purchase',txt:'구매내역'},
+				{name:'basket',txt:'장바구니'},
+				{name:'mypage',txt:'마이페이지'}
+			   ]
+       
+       $.each(aa,(i,j)=>{
+			$('<li><a href="#">'+j.txt+'</a></li>')
+			.appendTo(l_cnt+' ul.nav')
+			.attr('name',j.name)
+			.click(function(){
+			$('#right_content').empty();
+			let that = $(this).attr('name')
+			$(this).addClass('active')
+			$(this).siblings().removeClass('active');
+			switch(that){
+			case'mypage':
+				
+			break;	
+			case 'cusupdate':
+	
+			 
+			break;
+			case 'withdrawal':
+			
+				break;
+			case 'shopping': 
+				$.getScript($.js()+'/product/prod.js',()=>{
+					prod.init();	
+				}).fail(()=>{})
+				
+				
+				break;
+			case 'purchase': 
+				
+				break;
+			case 'basket':
+				
+			break;
+			}
+		
+		 })
+		
+	});//네비끝
+			
+			
+			
+			//마이페이지시작
+			  $('#right_content').html(compo.cust_mypage())
 			  $('#customerID').append(x.customerID);
 			  $('#customerName').append(x.customerName);
 			  $('#ssn').append(x.ssn);
@@ -49,7 +107,7 @@ cust = (()=>{
 				  customerID:x}
 		 alert(data.postalCode)
 		  $.ajax({
-			  url:$.ctx()+'/users/cust/'+x,
+			  url:$.ctx()+'/customers/'+x,
 			  type:'put',
 			  data:JSON.stringify(data),
 			  dataType:'json',

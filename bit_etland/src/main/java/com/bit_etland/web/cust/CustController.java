@@ -26,7 +26,6 @@ import com.bit_etland.web.emp.EmployeeMapper;
  * Handles requests for the application home page.
  */
 @RestController
-@RequestMapping("/users")
 public class CustController {
 	private static final Logger logger = LoggerFactory.getLogger(CustController.class);
 	
@@ -37,7 +36,7 @@ public class CustController {
 	@Autowired EmployeeMapper empMap;
 	@Autowired Users<?> user;
 	@Autowired Map<String, Object> map;
-	@PostMapping("/cust/{userid}")
+	@PostMapping("/customers/{userid}")
 	public Customer login(
 			@PathVariable String userid,
 			@RequestBody Customer param) {
@@ -50,7 +49,7 @@ public class CustController {
 	}
 	
 	@SuppressWarnings("unchecked")
-	@GetMapping("/{user}/list")
+	@GetMapping("/customers/list")
 	public List<Users<?>> list(
 			@RequestBody Map<?, ?> param){
 		logger.info("========list진입======");
@@ -58,7 +57,7 @@ public class CustController {
 		return (List<Users<?>>)i.apply(param);
 	}
 	
-	@PostMapping("/cust")
+	@PostMapping("/customers")
 	public Map<?, ?> join(
 			@RequestBody Customer param) {
 		logger.info("=========커스토머조인진입======");
@@ -69,7 +68,7 @@ public class CustController {
 		map.put("s", "s");
 		return map;
 	}
-	@PutMapping("/cust/{userid}")
+	@PutMapping("/customers/{userid}")
 	public Map<String, Object> update(
 			@PathVariable String userid,
 			@RequestBody Customer param){
@@ -81,7 +80,7 @@ public class CustController {
 		map.put("s", "s");
 		return map;
 	}
-	@DeleteMapping("/cust/{userid}")
+	@DeleteMapping("/customers/{userid}")
 	public Map<?, ?> delete(
 			@PathVariable String user,
 			@PathVariable String userid,

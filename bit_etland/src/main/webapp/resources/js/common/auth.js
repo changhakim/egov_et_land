@@ -38,12 +38,15 @@ auth = (()=>{
 			   ]
        
        $.each(aa,(i,j)=>{
-			$('<li><a href="#">'+j.txt+'</a></li>')
+			$('<li id="'+j.name+'"><a href="#">'+j.txt+'</a></li>')
 			.appendTo(l_cnt+' ul.nav')
 			.attr('name',j.name)
 			.click(function(){
 			$('#right_content').empty();
-			switch($(this).attr('name')){
+			let that = $(this).attr('name')
+			$(this).addClass('active')
+			$(this).siblings().removeClass('active');
+			switch(that){
 			case 'cuslogin':
 			$(compo.cust_login_form()).appendTo('#right_content');
 			 $('form button[type=submit]').click(e=>{
@@ -77,6 +80,8 @@ auth = (()=>{
 		 })
 		
 	});
+      $('#cuslogin').addClass('active') 
+       
 })
 .fail(()=>{
 	 alert('component/compo.js 못찾았다 창하야 정신차려라')
@@ -90,7 +95,7 @@ let login =()=>{
 			   password:$('form input[name=psw]').val()
 			   }
 			  $.ajax({
-				  url: $.ctx()+'/users/cust/'+data.customerID,
+				  url: $.ctx()+'/customers/'+data.customerID,
 				  type:'post',
 				  data : JSON.stringify(data),
 				  dataType :'json',
@@ -124,7 +129,7 @@ let join =()=>{
 				 address:$('form input[name=address]').val(),
 				 postalCode:$('form input[name=postalCode]').val()};
 		 $.ajax({
-			 url:$.ctx()+'/users/cust/',
+			 url:$.ctx()+'/customers',
 			 type:'post',
 			 data:JSON.stringify(data),
 			 dataType:'json',
