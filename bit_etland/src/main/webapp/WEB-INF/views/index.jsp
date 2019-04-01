@@ -12,11 +12,13 @@
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"><!-- 쇼핑몰css시작 -->
+  <link rel="stylesheet" href="<%=application.getContextPath() %>/resources/css/login.css" />
+   <link rel="stylesheet" href="<%=application.getContextPath() %>/resources/css/table.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script><!-- 쇼핑몰css끝 -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script><!-- date ui -->
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script><!-- date ui -->
   
   <style>
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */

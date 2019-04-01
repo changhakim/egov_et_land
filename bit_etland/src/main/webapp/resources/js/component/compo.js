@@ -40,12 +40,13 @@ compo = {
 
 		+'  <div class="container">'
 		+'  <label for="employeeID"><b>employeeID</b></label>'
-		+'    <input type="text" placeholder="아이디를 입력하세요" name="employeeID" required>'
+		
 
 		+'   <label for="name"><b>Password</b></label>'
-		+'    <input type="name" placeholder="이름을 입력하세요" name="name" required>'
+		+'    <input type="text" placeholder="이름을 입력하세요" id="name" name="name" value="김경민" required>'
 		        
-		+'    <button type="submit">access</button>'
+		+'    <button type="submit" id="access_btn">access</button>'
+		+'    <button type="submit" id="name_btn">name</button>'
 		+'    <label>'
 		+'    <input type="checkbox" checked="checked" name="remember"> Remember me'
 		+'    </label>'
@@ -359,6 +360,35 @@ compo = {
 		+'  <label for="comment">상세설명:</label>'
 		+'  <textarea class="form-control" rows="5" id="comment"></textarea>'
 		+'</div>'
+	},
+	cust_list:()=>{
+		return '<div class="container">'
+		+'  <table id="alltable" style="margin:auto" background ="/web/resources/img/you.jpg">'
+		+'  <tr>'
+		+'    <th>NO.</th> '
+		+'    <th>아이디</th> '
+		+'    <th>이름</th>'
+		+'    <th>생년월일</th>'
+		+'    <th>성 별</th>'
+		+'    <th>전화번호</th>'
+		+'    <th>지번주소</th>'
+		+'    <th>상세주소</th>'
+		+'    <th>우편번호</th>'
+
+
+		+'  </tr>'
+
+		+'</table>'
+		+'</div>'
+		+'  <ul class="pagination">'
+		+'    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>'
+		+'    <li class="page-item"><a class="page-link" href="#">1</a></li>'
+		+'    <li class="page-item"><a class="page-link" href="#">2</a></li>'
+		+'    <li class="page-item"><a class="page-link" href="#">3</a></li>'
+		+'    <li class="page-item"><a class="page-link" href="#">4</a></li>'
+		+'    <li class="page-item"><a class="page-link" href="#">5</a></li>'
+		+'    <li class="page-item"><a class="page-link" href="#">Next</a></li>'
+		+'  </ul>'
 	}
 	
 }

@@ -18,7 +18,8 @@ auth = (()=>{
 		
 		$.when(
 		$.getScript(compojs),
-		$.getScript($.js()+'/customer/cust.js')
+		$.getScript($.js()+'/customer/cust.js'),
+		$.getScript($.js()+'/employee/emp.js')
 		)
 		.done(()=>{
 			$(r_cnt).html(compo.cust_login_form());
@@ -67,13 +68,16 @@ auth = (()=>{
 				
 				break;
 			case 'empregist': 
-				 $(compo.emp_access_form())
-                 .appendTo(r_cnt);
-				
-				break;
-			case 'empaccess': 
 				$(compo.emp_register_form())
                 .appendTo(r_cnt);
+				break;
+			case 'empaccess': 
+				$(compo.emp_access_form())
+                 .appendTo(r_cnt);
+				$('#access_btn').click(e=>{
+					e.preventDefault();
+					access();
+				});
 				break;
 			}
 		
@@ -164,58 +168,40 @@ let join =()=>{
 		 })
 	 };
 let access =()=>{	
-			alert('로그인들어옴')
-			 
-			  let data = {
+			  let ok = confirm('사원입니까?')
+			  if(ok){
+				  let emp_id = prompt('사원번호 입력하세요');
+				  $.getJSON($.ctx()+'/emp',d=>{
+						  if(d.employeeID===emp_id){
+							  alert('사원인증');
+							  $('#name_btn').click(e=>{
+								  e.preventDefault();
+								  let emp_name =  $('#name').val();
+								  if(d.name===emp_name){
+									 alert('이름인증')
+									 cust.list();
+								  }else{
+									  alert('이름이 일치하지않습니다')
+								  }  
+							  })
+							
+						  }else{
+							  alert('사원번호가 일치하지 않습니다')
+							  //사원번호가 일치하지 않습니다.
+						  }
+						  
+					  
+					  
+				})
+			  }else{
+				  alert('사원전용페이지입니다 돌아가주세요')
+				  //사원전용페이지입니다 돌아가주세요
+			  }
+			  /*let data = {
 			   employeeID:$('form input[name=employeeID]').val(),
 			   name:$('form input[name=name]').val()
 			   }
-			  $.ajax({
-				  url: $.ctx()+'/users/emp/'+data.customerID,
-				  type:'post',
-				  data : JSON.stringify(data),
-				  dataType :'json',
-				  contentType:'application/json',
-				  success:d=>{
-					  if(d.customerID!==''){
-						  alert('성공'+d.customerID);
-						  $('#right_content').html(compo.cust_mypage())
-						  $('#customerID').append(d.customerID);
-						  $('#customerName').append(d.customerName);
-						  $('#ssn').append(d.ssn);
-						  $('#phone').append(d.phone);
-						  $('#city').append(d.city);
-						  $('#address').append(d.address);
-						  $('#postalCode').append(d.postalCode);
-						  $('.ubdatebtn').click(()=>{
-							  $('#right_content').html(compo.cust_mypage());
-							  $('#customerID').append(d.customerID);
-							  $('#customerName').append(d.customerName);
-							  $('#ssn').append(d.ssn);
-							  $('#phone').html('<label for="phone"><b>phone</b></label></br><input type="text" value="'+d.phone+'" name="phone" "required"></br>');
-							  $('#city').html('<label for="city"><b>city</b></label></br><input type="text" value="'+d.city+'" name="city" "required"></br>');
-							  $('#address').html('<label for="address"><b>address</b></label></br><input type="text" value="'+d.address+'" name="address" "required"></br>');
-							  $('#postalCode').html('<label for="postalCode"><b>postalCode</b></label></br><input type="text" value="'+d.postalCode+'" name="postalCode" "required"></br>');
-							  $('#postalCode').after('<p id="password"><label for="password"><b>password</b></label></br><input type="text" value="'+d.password+'" name="password" "required"></br></p>')
-							  $('.ubdatebtn').attr('id','confirmbtn').text('확인')
-						
-							  $('#confirmbtn').click(()=>{
-								  update(d.customerID);
-							  })
-						  
-						  })
-						 
-					  }else{
-						  alert('실패')
-					  }
-					  
-				  },
-				  error:(request,status,error)=>{
-					  alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-
-					 	  alert('실패')
-			   }
-			})
+			  */
 	     
 	 };	 
 let register =()=>{

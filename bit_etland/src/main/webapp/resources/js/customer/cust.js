@@ -11,12 +11,20 @@ cust = (()=>{
         
 		onCreate(x);
 	}
+	let reset=()=>{
+		_ = $.ctx();
+        js = $.js();
+        compojs = $.js()+'/component/compo.js';
+        r_cnt = '#right_content';
+        l_cnt = '#left_content';
+	}
 	let onCreate=x=>{
 		setContentView(x);
 	}
 	let setContentView=x=>{
 		$.when(
-		$.getScript(compojs)		
+		$.getScript(compojs),
+		$.getScript($.js()+'/employee/emp.js')
 		).done(()=>{
 			$(l_cnt+' ul.nav').empty()
 			let aa=[{name:'cusupdate',txt:'정보수정'},
@@ -120,7 +128,77 @@ cust = (()=>{
 			  }
 			  
 		  })
-	 }
-	return{init:init}
+	 };
+	let list = ()=>{
+		reset();
+		$(l_cnt+' ul.nav').empty()
+		
+		let aa=[{name:'cuslist',txt:'회원리스트'},
+			{name:'withdrawal',txt:'회원탈퇴'},
+			{name:'shopping',txt:'쇼핑몰'},
+			{name:'purchase',txt:'구매내역'},
+			{name:'basket',txt:'장바구니'},
+			{name:'mypage',txt:'마이페이지'}
+		   ]
+		
+   $.each(aa,(i,j)=>{
+		$('<li><a href="#">'+j.txt+'</a></li>')
+		.appendTo(l_cnt+' ul.nav')
+		.attr('name',j.name)
+		.click(function(){
+		$('#right_content').empty();
+		let that = $(this).attr('name')
+		$(this).addClass('active')
+		$(this).siblings().removeClass('active');
+		switch(that){
+		case'cuslist':
+
+		break;	
+		case 'cusupdate':
+
+		 
+		break;
+		case 'withdrawal':
+		
+			break;
+		case 'shopping': 
+			$.getScript($.js()+'/product/prod.js',()=>{
+				prod.init();	
+			}).fail(()=>{})
+			
+			
+			break;
+		case 'purchase': 
+			
+			break;
+		case 'basket':
+			
+		break;
+		}
+	
+	 })
+	
+});//네비끝
+		$(r_cnt).html(compo.cust_list())
+		$.getJSON(_+'/customers/page/1',d=>{
+			
+			$.each(d,(x,y)=>{
+			$('<tr class="oneList">'
+				+'<td class="'+x+'no"></td>'
+				+'<td class="'+x+'customerID">'+y.customerID+'</td>'
+				+'<td class="'+x+'customerName">'+y.customerName+'</a></td>'
+				+'<td class="'+x+'ssn">'+y.ssn+'</td>'
+				+'<td class="'+x+'gender">남</td>'
+				+'<td class="'+x+'phone">'+y.phone+'</td>'
+				+'<td class="'+x+'city">'+y.city+'</td>'
+				+'<td class="'+x+'address">'+y.address+'</td>'
+				+'<td class="'+x+'postalCode">'+y.postalCode+'</td>'
+				+'</tr>')
+			.appendTo('#alltable')
+			});
+		});
+	 };
+	return{init:init,
+		  list:list}
 	
 })();

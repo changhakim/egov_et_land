@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bit_etland.web.cmm.IConsumer;
 import com.bit_etland.web.cmm.IFunction;
+import com.bit_etland.web.cmm.ISupplier;
 import com.bit_etland.web.cmm.PrintService;
 import com.bit_etland.web.cmm.Users;
 import com.bit_etland.web.cust.CustController;
 
 @RestController
-@RequestMapping("/users")
 public class EmployeeController {
 
 private static final Logger logger = LoggerFactory.getLogger(CustController.class);
@@ -33,16 +33,15 @@ private static final Logger logger = LoggerFactory.getLogger(CustController.clas
 	@Autowired EmployeeMapper empMap;
 	@Autowired Users<?> user;
 	@Autowired Map<String, Object> map;
-	@PostMapping("/emp/{userid}")
-	public Employee login(
-			@PathVariable String userid,
-			@RequestBody Employee param) {
-		logger.info("=========커스토머진입======");
+	@GetMapping("/emp")
+	public Employee login() {
+		logger.info("=========임플로이진입======");
 		
-		IFunction i = (Object o) -> empMap.selectEmployee(param);
-		 
+		/*IFunction i = (Object o) -> empMap.selectEmployee(param);*/
+		ISupplier i = () -> empMap.findOneEmployee();
+		System.out.println(i.get().toString()); 
 		
-		return (Employee) i.apply(param);
+		return (Employee) i.get();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -54,7 +53,7 @@ private static final Logger logger = LoggerFactory.getLogger(CustController.clas
 		return (List<Users<?>>)i.apply(param);
 	}
 	
-	@PostMapping("/emp")
+	@PostMapping("/emp/{userid}")
 	public Map<?, ?> join(
 			@RequestBody Employee param) {
 		logger.info("=========커스토머조인진입======");

@@ -11,6 +11,7 @@ public interface EmployeeMapper {
 	public List<Employee> selectEmployeeList();
 	public List<Employee> selectEmployees(Object o);
 	public Employee selectEmployee(Employee emp);
+	public Employee findOneEmployee();
 	public int countEmployees();
 	public Employee existsEmployee(Employee emp);
 	
