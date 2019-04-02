@@ -3,10 +3,23 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bit_etland.web.cust.CustomerMapper">
+
+	<resultMap id="result" type="hashmap">
+  	<id property="id" column="user_id" />
+  	<result property="customerID" column="CUSTOMER_ID"/>
+  	<result property="customerName" column="CUSTOMER_NAME"/>
+  	<result property="password" column="PASSWORD"/>
+  	<result property="ssn" column="SSN"/>
+  	<result property="photo" column="PHOTO"/>
+  	<result property="phone" column="PHONE"/>
+  	<result property="city" column="CITY"/>
+  	<result property="address" column="ADDRESS"/>
+  	<result property="postalCode" column="POSTALCODE"/>
+  	<result property="no" column="NO"/>
+	</resultMap>
 	<select id="selectCustomer" resultType="com.bit_etland.web.cust.Customer">
-	  SELECT 
-	  	CUSTOMER_ID customerID, 
-        CUSTOMER_NAME customerName, 
+	  SELECT CUSTOMER_ID customerID,  
+	  	CUSTOMER_NAME customerName, 
         PASSWORD, 
         SSN ,
         PHONE,
@@ -22,19 +35,22 @@
 	 
 	  	
 	</select>
-	<select id="selectCustomers" resultType="com.bit_etland.web.cust.Customer" 
+	<select id="selectCustomers" resultMap="result" 
 	parameterType="com.bit_etland.web.cmm.Proxy">
-	  SELECT 
-	  	CUSTOMER_ID customerID, 
-        CUSTOMER_NAME customerName, 
-        PASSWORD, 
-        SSN ,
-        PHONE,
-        CITY,
-        ADDRESS,
-        POSTALCODE
-	  FROM CUSTOMERS
+	  SELECT P.*
+	  FROM (SELECT @ROWNUM:=@ROWNUM+1 as no,T.*
+	  		 FROM(SELECT @ROWNUM:=@ROWNUM+1 as no1, a.*
+	  		 		FROM (SELECT C.*
+	  		  		 		FROM CUSTOMERS C
+			  		 		WHERE (@ROWNUM:=0)=0)a)T
+	  		WHERE (@ROWNUM:=0)=0	  		 
+	  		ORDER BY no1 DESC)P
+	  WHERE no BETWEEN #{startRow} AND #{endRow};
   	
+	</select>
+	<select id="countCustomers" resultType="Integer">
+	  SELECT COUNT(*)
+  	  FROM CUSTOMERS	  
 	</select>
 	<insert
 		 id="insertCustomer" 

@@ -14,9 +14,9 @@ public interface CustomerMapper {
 		public void insertCustomer(Customer customer);
 		
 		public List<Customer> selectCustomerList();
-		public List<Customer> selectCustomers(Proxy pxy);
+		public List<?> selectCustomers(Proxy pxy);
 		public Customer selectCustomer(Customer cus);
-		public String countCustomers(Map<?, ?> map);
+		public int countCustomers();
 		public Customer existCustomerID(Customer cus);
 		
 		

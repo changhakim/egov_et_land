@@ -1,97 +1,45 @@
 var auth = auth||{}
 auth = (()=>{
-	let _,js,compojs,r_cnt,l_cnt;
+	let _,js,
+		compojs,custjs,empjs,
+		r_cnt,l_cnt;
+	
 	let init =()=>{
         _ = $.ctx();
         js = $.js();
         compojs = $.js()+'/component/compo.js';
+        custjs = $.js()+'/customer/cust.js';
+        empjs = $.js()+'/employee/emp.js';
         r_cnt = '#right_content';
         l_cnt = '#left_content';
          
         onCreate();
    };
 	let onCreate=()=>{
-		setContentView();
+		$.when(
+			$.getScript(compojs),
+			$.getScript(custjs),
+			$.getScript(empjs)
+			)
+			.done(()=>{
+			setContentView();
+	})
+		.fail(()=>{
+			 alert('component/compo.js 못찾았다 창하야 정신차려라')
+		})
+		
 		
 	};
 	let setContentView=()=>{
-		
-		$.when(
-		$.getScript(compojs),
-		$.getScript($.js()+'/customer/cust.js'),
-		$.getScript($.js()+'/employee/emp.js')
-		)
-		.done(()=>{
-			$(r_cnt).html(compo.cust_login_form());
-			$('form button[type=submit]').click(e=>{
-			e.preventDefault();
-			login(); 
-			});
-			
-			
-       // 왼쪽 네비게이션
-       $(l_cnt+' ul.nav').empty()
-		
-		let aa=[{name:'cuslogin',txt:'회원로그인'},
-				{name:'cusjoin',txt:'회원가입'},
-				{name:'empregist',txt:'사원등록'},
-				{name:'empaccess',txt:'사원접속'}
-			   ]
-       
-       $.each(aa,(i,j)=>{
-			$('<li id="'+j.name+'"><a href="#">'+j.txt+'</a></li>')
-			.appendTo(l_cnt+' ul.nav')
-			.attr('name',j.name)
-			.click(function(){
-			$('#right_content').empty();
-			let that = $(this).attr('name')
-			$(this).addClass('active')
-			$(this).siblings().removeClass('active');
-			switch(that){
-			case 'cuslogin':
-			$(compo.cust_login_form()).appendTo('#right_content');
-			 $('form button[type=submit]').click(e=>{
-					e.preventDefault();
-					login();
-					 
-			 });
-			break;
-			case 'cusjoin':
-				 $(compo.cust_join_form())
-                 .appendTo(r_cnt);
-			$('form button[type=submit]').click(e=>{
-				e.preventDefault();
-				join();
-			})
-				
-				 
-				
-				break;
-			case 'empregist': 
-				$(compo.emp_register_form())
-                .appendTo(r_cnt);
-				break;
-			case 'empaccess': 
-				$(compo.emp_access_form())
-                 .appendTo(r_cnt);
-				$('#access_btn').click(e=>{
-					e.preventDefault();
-					access();
-				});
-				break;
-			}
-		
-		 })
-		
-	});
-      $('#cuslogin').addClass('active') 
-       
-})
-.fail(()=>{
-	 alert('component/compo.js 못찾았다 창하야 정신차려라')
-})
+		firstnav();
+		$(r_cnt).html(compo.cust_login_form());
+		$('form button[type=submit]').click(e=>{
+		e.preventDefault();
+		login(); 
+		});
+
 };
-let login =()=>{	
+	let login =()=>{	
 			alert('로그인들어옴')
 			 
 			  let data = {
@@ -123,7 +71,7 @@ let login =()=>{
 			})
 	     
 	 };
-let join =()=>{
+	 let join =()=>{
 		 let data={customerID:$('form input[name=customerID]').val(),
 				 customerName:$('form input[name=customerName]').val(),
 				 password:$('form input[name=password]').val(),
@@ -167,7 +115,7 @@ let join =()=>{
 			 
 		 })
 	 };
-let access =()=>{	
+	 let access =()=>{	
 			  let ok = confirm('사원입니까?')
 			  if(ok){
 				  let emp_id = prompt('사원번호 입력하세요');
@@ -179,7 +127,7 @@ let access =()=>{
 								  let emp_name =  $('#name').val();
 								  if(d.name===emp_name){
 									 alert('이름인증')
-									 cust.list();
+									 cust.list('1');
 								  }else{
 									  alert('이름이 일치하지않습니다')
 								  }  
@@ -187,7 +135,7 @@ let access =()=>{
 							
 						  }else{
 							  alert('사원번호가 일치하지 않습니다')
-							  //사원번호가 일치하지 않습니다.
+							  // 사원번호가 일치하지 않습니다.
 						  }
 						  
 					  
@@ -195,16 +143,16 @@ let access =()=>{
 				})
 			  }else{
 				  alert('사원전용페이지입니다 돌아가주세요')
-				  //사원전용페이지입니다 돌아가주세요
+				  // 사원전용페이지입니다 돌아가주세요
 			  }
-			  /*let data = {
-			   employeeID:$('form input[name=employeeID]').val(),
-			   name:$('form input[name=name]').val()
-			   }
-			  */
+			  /*
+				 * let data = { employeeID:$('form
+				 * input[name=employeeID]').val(), name:$('form
+				 * input[name=name]').val() }
+				 */
 	     
 	 };	 
-let register =()=>{
+	 let register =()=>{
 		
 		 let data={employeeID:$('form input[name=employeeID]').val(),
 				 manager:$('form input[name=manager]').val(),
@@ -225,8 +173,7 @@ let register =()=>{
 					 $('form button[type=submit]').click(e=>{
 							e.preventDefault();
 							login();
-							 
-					 });
+					  });
 					 
 				 }
 				 else{
@@ -247,6 +194,65 @@ let register =()=>{
 			 
 		 })
 	 };
+	 let firstnav=()=>{
+		 // 왼쪽 네비게이션
+		 $(l_cnt+' ul.nav').empty()
+		 $('#navtit').text('비트랜드 로그인페이지');
+		 let aa=[{name:'cuslogin',txt:'회원로그인'},
+				{name:'cusjoin',txt:'회원가입'},
+				{name:'empregist',txt:'사원등록'},
+				{name:'empaccess',txt:'사원접속'}
+			   ]
+    
+		 $.each(aa,(i,j)=>{
+			$('<li id="'+j.name+'"><a href="#">'+j.txt+'</a></li>')
+			.appendTo(l_cnt+' ul.nav')
+			.attr('name',j.name)
+			.click(function(){
+			$('#navtit').text('비트랜드 '+j.txt);	
+			$('#right_content').empty();
+			let that = $(this).attr('name')
+			$(this).addClass('active')
+			$(this).siblings().removeClass('active');
+			switch(that){
+			case 'cuslogin':
+			$(compo.cust_login_form()).appendTo('#right_content');
+			 $('form button[type=submit]').click(e=>{
+					e.preventDefault();
+					login();
+					 
+			 });
+			break;
+			case 'cusjoin':
+				 $(compo.cust_join_form())
+              .appendTo(r_cnt);
+			$('form button[type=submit]').click(e=>{
+				e.preventDefault();
+				join();
+			})
+				
+				 
+				
+				break;
+			case 'empregist': 
+				$(compo.emp_register_form())
+             .appendTo(r_cnt);
+				break;
+			case 'empaccess': 
+				$(compo.emp_access_form())
+              .appendTo(r_cnt);
+				$('#access_btn').click(e=>{
+					e.preventDefault();
+					access();
+				});
+				break;
+			}
+		
+		 });
+		
+	});
+   $('#cuslogin').addClass('active')
+}	 
 
      
 

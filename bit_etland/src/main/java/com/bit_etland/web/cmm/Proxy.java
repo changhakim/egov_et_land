@@ -20,7 +20,7 @@ public class Proxy{
 		this.pageSize =(paramMap.get("page_size")==null)?5:Integer.parseInt((String) paramMap.get("page_size"));
 		
 		
-
+		totalCount = (int) paramMap.get("totalCount");
 		int pageCount = totalCount/pageSize;
 		if(totalCount%pageSize!=0) {
 			pageCount++;
