@@ -16,9 +16,10 @@
    <link rel="stylesheet" href="<%=application.getContextPath() %>/resources/css/table.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script><!-- 쇼핑몰css끝 -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script><!-- date ui -->
+  <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script><!-- 상품등록 -->
+  <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
+  <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/holder.min.js"></script><!-- 상품목록 javascript끝 -->
   
   <style>
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */

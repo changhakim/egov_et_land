@@ -34,12 +34,13 @@ public class Proxy{
 		this.existPrev = (pageNum<=blockSize)?false:true;
 		
 		startpage = ((pageNum-1)/blockSize)*blockSize+1;
-		this.existNext = (startpage+pageSize)>=pageCount?false:true;
+		this.existNext = (startpage+pageSize)>pageCount?false:true;
 		endpage = startpage + 4;
 		if(endpage>pageCount) {
 			endpage = pageCount;
 		
 		}
+
 		prevBlock = startpage - pageSize;
 		nextBlock = startpage + pageSize;
 		

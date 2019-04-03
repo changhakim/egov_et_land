@@ -1,5 +1,7 @@
 package com.bit_etland.web.prod;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -14,4 +16,5 @@ public class Product {
 	   unit,
 	   photo,
 	   price;
+	List<String> check;
 }

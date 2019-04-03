@@ -47,7 +47,8 @@ cust = (()=>{
 						mypage(x);
 					break;	
 					case 'cusupdate':
-
+					
+						
 					 
 					break;
 					case 'withdrawal':
@@ -148,26 +149,48 @@ cust = (()=>{
 			.appendTo('#alltable')
 			});
 			if(d.pxy.existPrev){
-				$('<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>').appendTo('.pagination')
+				$('<li class="page-item disabled"><a id="previous" class="page-link" href="#">Previous</a></li>').appendTo('.pagination')
 			}
-			for(let i=d.pxy.startpage;i<=d.pxy.endpage;i++){
+			
+			let i=0;
+			for(i=d.pxy.startpage;i<=d.pxy.endpage;i++){
 				if(d.pxy.pageNum === i){
-					$('<li class="page-item"><a class="page-link active" href="#">'+i+'</a></li>').appendTo('.pagination')
+					$('<li class="page-item"><a class="pages page-link active">'+i+'</a></li>')
+					.attr('href','/customers/page/'+i)
+					.appendTo('.pagination')
+					.click(function(){
+						
+						
+						list($(this).text());
+					})
 					
 					
 				}else{
-					$('<li class="page-item"><a class="page-link" href="#">'+i+'</a></li>').appendTo('.pagination')
+					$('<li class="page-item"><a class="pages page-link">'+i+'</a></li>')
+					.attr('href','/customers/page/'+i)
+					.appendTo('.pagination')
+					.click(function(){
+						
+						
+						list($(this).text());
+					})
 					
 				}
 			}
 			if(d.pxy.existNext){
-				$('<li class="page-item"><a class="page-link" href="#">Next</a></li>').appendTo('.pagination')
+				$('<li class="page-item"><a id="next"class="page-link" href="#">Next</a></li>').appendTo('.pagination')
 			}
-			$('.page-link').each(function(i){
-				$(this).click(function(){
-					list(i+1);
-				})
+			$('#previous').click(()=>{
+				list(d.pxy.prevBlock)
 			})
+			$('#next').click(()=>{
+				list(d.pxy.nextBlock)
+			})
+/*			$('.pages').each(function(i){
+				$(this).click(function(){
+					list($(this).text());
+				})
+			})*/
 			
 		});
 	 };

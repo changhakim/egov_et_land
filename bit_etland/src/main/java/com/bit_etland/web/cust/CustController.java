@@ -58,6 +58,7 @@ public class CustController {
 		logger.info("========list진입======");
 		//page_num,page_size,blocksize,totalCount
 		map.clear();		
+		System.out.println(page);
 		map.put("page_num", page);
 		map.put("page_size", "5");
 		map.put("blocksize", "5");

@@ -23,7 +23,8 @@ emp=(()=>{
 	let setContentView=()=>{
 		$.when(
 		$.getScript(compojs),
-		$.getScript($.js()+'/customer/cust.js')
+		$.getScript($.js()+'/customer/cust.js'),
+		$.getScript($.js()+'/product/prod.js')
 		).done(()=>{
 
 		
@@ -54,14 +55,21 @@ emp=(()=>{
 		$(this).siblings().removeClass('active');
 		switch(that){
 		case'cuslist':
-
+			$.getScript($.js()+'/customer/cust.js',()=>{
+			  cust.list("1");	
+			})
 		break;	
 		case 'proregist':
-
-		 
-		break;
+			
+			$.getScript($.js()+'/product/prod.js',()=>{
+					prod.regist();	
+			})
+				
+			break;
 		case 'prolist':
-		
+			$.getScript($.js()+'/product/prod.js',()=>{
+			 prod.list("1");	
+			})
 			break;
 		case 'proupdate': 
 			$.getScript($.js()+'/product/prod.js',()=>{
