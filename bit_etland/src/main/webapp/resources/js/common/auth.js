@@ -252,6 +252,7 @@ auth = (()=>{
 		
 	});
    $('#cuslogin').addClass('active')
+   
 }	 
 
      

@@ -56,7 +56,7 @@ emp=(()=>{
 		switch(that){
 		case'cuslist':
 			$.getScript($.js()+'/customer/cust.js',()=>{
-			  cust.list("1");	
+			  cust.list("1");
 			})
 		break;	
 		case 'proregist':
@@ -95,7 +95,9 @@ emp=(()=>{
 	
 });//네비끝
 $('#cuslogin').addClass('active')
+	
 };
+	
 	return{init:init,
 		   empnav:empnav}
 	

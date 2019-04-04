@@ -43,31 +43,26 @@ prod=(()=>{
 			
 			$('.btn-primary').click(e=>{
 				e.preventDefault();
-				let sup = '';
-				switch($('#supplier_id').val()){
-				case 'samsung': sup='1000'; break;
-				case 'lg': sup='1001';break;
-				case 'apple': sup='1002';break;
-				case 'xaomi': sup='1003';break;}
+
 				
-				
-				let cate = '';
-				switch($('#category_id').val()){
-				case '스마트폰': cate='1000'; break;}
-				
-				
-				 let checkboxValues = [];
+				let freebies = [];
 				 $(".checks:checked").each(function(i) {
-				    checkboxValues.push($(this).val());
+					 freebies.push($(this).val());
 				});
-				let chch = checkboxValues[0]+','+checkboxValues[1]
-				let data = {categoryID:cate,
+				
+				if($.fn.nullCheker([$('#product_name').val(),$('#price').val(),$('#unit').val()])){
+					alert('상품명을 입력해주세요')
+				}
+				 
+				 
+				let data = {categoryID:$('#category_name').val(),
 							productName:$('#product_name').val(),
 							price:$('#price').val(),
 							unit:$('#unit').val(),
-							supplierID:sup,
+							supplierID:$('#supplier_name').val(),
 							color:$('.radi:checked').val(),
-							check:checkboxValues};/*라디오에 클래스부여함*/ 
+							freebies:freebies,
+							comment:$('#comment').val()};/*라디오에 클래스부여함*/ 
 				$.ajax({
 					url:_+'/phones',
 					type:'post',

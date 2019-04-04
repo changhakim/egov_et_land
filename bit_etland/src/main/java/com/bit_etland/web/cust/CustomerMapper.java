@@ -16,6 +16,7 @@ public interface CustomerMapper {
 		public List<Customer> selectCustomerList();
 		public List<?> selectCustomers(Proxy pxy);
 		public Customer selectCustomer(Customer cus);
+		public Customer searchCustomers(String searchWord);
 		public int countCustomers();
 		public Customer existCustomerID(Customer cus);
 		

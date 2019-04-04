@@ -15,6 +15,7 @@ public class Product {
 	   categoryID,
 	   unit,
 	   photo,
-	   price;
-	List<String> check;
+	   price,
+	   color;
+  private List<String> freebies;
 }

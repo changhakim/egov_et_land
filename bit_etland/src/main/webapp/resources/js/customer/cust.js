@@ -70,6 +70,14 @@ cust = (()=>{
 					};
 				
 				 });
+			
+		    })
+		    $('#search_btn').on('click',e=>{
+						e.preventDefault();
+						let searchword=$('#search_input').val();
+						let dd = {searchword:searchword,
+								  firstno : '1'};
+						search(dd);
 				
 			});//네비끝
 			mypage(x);
@@ -207,6 +215,83 @@ cust = (()=>{
   
 $('#cuslogin').addClass('active')
 	} 
+  let search =x=>{
+	  $(r_cnt).html('<div class="container">'
+				+'  <table id="alltable" style="margin:auto">'
+				+'  <tr>'
+				+'    <th>상품NO</th> '
+				+'    <th>상품명</th> '
+				+'    <th>제조사이름</th>'
+				+'    <th>카테고리명</th>'
+				+'    <th>수량</th>'
+				+'    <th>가격</th>'
+				+'  </tr>'
+				+'</table>'
+				+'</div>'
+				+'<div id="page">'
+				+'  <ul class="pagination">'
+				+'  </ul>'
+				+'</div>')
+	  $.getJSON(_+'/trans/'+x.searchword+"/"+x.firstno,d=>{
+		  $.each(d.ls,(x,y)=>{
+			  $('<tr class="oneList">'
+						+'<td class="productID">'+y.productID+'</td>'
+						+'<td class="productName">'+y.productName+'</td>'
+						+'<td class="supplierID">'+y.supplierID+'</a></td>'
+						+'<td class="categoryID">'+y.categoryID+'</td>'
+						+'<td class="unit">'+y.unit+'</td>'
+						+'<td class="price">'+y.price+'</td>'
+						+'</tr>')
+					.appendTo('#alltable')
+		 });/*each끝*/
+		  if(d.pxy.existPrev){
+				$('<li class="page-item disabled"><a id="previous" class="page-link">Previous</a></li>').appendTo('.pagination')
+			}
+			
+			let i=0;
+			for(i=d.pxy.startpage;i<=d.pxy.endpage;i++){
+				if(d.pxy.pageNum === i){
+					$('<li class="page-item"><a class="pages page-link active">'+i+'</a></li>')
+					.attr('href','/phones/page/'+i)
+					.appendTo('.pagination')
+					.click(function(){
+						alert(x.searchword)
+						alert($(this).text())
+						let abc1 = {firstno:$(this).text(),
+								  searchword:x.searchword}
+						search(abc1);
+					})
+					}else{
+					$('<li class="page-item"><a class="pages page-link">'+i+'</a></li>')
+					.attr('href','/phones/page/'+i)
+					.appendTo('.pagination')
+					.click(function(){
+						alert(x.searchword)
+						alert($(this).text())
+						let abc2 = {firstno:$(this).text(),
+								  searchword:x.searchword}
+						search(abc2);
+						
+					})
+					
+				}
+			}
+			if(d.pxy.existNext){
+				$('<li class="page-item"><a id="next"class="page-link">Next</a></li>').appendTo('.pagination')
+			}
+			$('#previous').click(()=>{
+				let abc3 = {firstno:d.pxy.prevBlock,
+						  searchword:x.searchword}
+				list(abc3)
+			})
+			$('#next').click(()=>{
+				let abc3 = {firstno:d.pxy.nextBlock,
+						  searchword:x.searchword}
+				list(abc3)
+			})
+		  
+	 });/*getJSON끝*/
+}
 	return{init:init,
 		  list:list}
 	

@@ -5,8 +5,7 @@
 <mapper namespace="com.bit_etland.web.cust.CustomerMapper">
 
 	<resultMap id="result" type="hashmap">
-  	<id property="id" column="user_id" />
-  	<result property="customerID" column="CUSTOMER_ID"/>
+  	<id property="customerID" column="CUSTOMER_ID" />
   	<result property="customerName" column="CUSTOMER_NAME"/>
   	<result property="password" column="PASSWORD"/>
   	<result property="ssn" column="SSN"/>

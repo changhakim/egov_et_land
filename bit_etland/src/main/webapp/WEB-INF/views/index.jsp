@@ -61,9 +61,9 @@
         <li><a href="#section3">Photos</a></li>
       </ul><br>
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search Blog..">
+        <input id="search_input" type="text" class="form-control" placeholder="상품 검색">
         <span class="input-group-btn">
-          <button class="btn btn-default" type="button">
+          <button id="search_btn" class="btn btn-default" type="button">
             <span class="glyphicon glyphicon-search"></span>
           </button>
         </span>
@@ -145,6 +145,7 @@
 <script src="<%=application.getContextPath() %>/resources/js/employee/emp.js"></script>
 <script src="<%=application.getContextPath() %>/resources/js/customer/cust.js"></script>
 <script src="<%=application.getContextPath() %>/resources/js/common/auth.js"></script>
+<script src="<%=application.getContextPath() %>/resources/js/common/util.js"></script>
 <script src="<%=application.getContextPath() %>/resources/js/product/prod.js"></script>
 <script>
 app.init('<%= application.getContextPath() %>');

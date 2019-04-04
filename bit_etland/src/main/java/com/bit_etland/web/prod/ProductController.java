@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bit_etland.web.cate.Category;
+import com.bit_etland.web.cate.CategoryMapper;
 import com.bit_etland.web.cmm.IConsumer;
 import com.bit_etland.web.cmm.IFunction;
 import com.bit_etland.web.cmm.ISupplier;
@@ -22,6 +25,8 @@ import com.bit_etland.web.cmm.Proxy;
 import com.bit_etland.web.cmm.Users;
 import com.bit_etland.web.cust.CustController;
 import com.bit_etland.web.emp.EmployeeMapper;
+import com.bit_etland.web.sup.Supplier;
+import com.bit_etland.web.sup.SupplierMapper;
 
 @RestController
 public class ProductController {
@@ -32,6 +37,10 @@ public class ProductController {
 	@Autowired PrintService ps;
 	@Autowired ProductMapper prodMap;
 	@Autowired EmployeeMapper empMap;
+	@Autowired SupplierMapper supMap;
+	@Autowired CategoryMapper cateMap;
+	@Autowired Supplier sup;
+	@Autowired Category cate;
 	@Autowired Users<?> user;
 	@Autowired Map<String, Object> map;
 	@Autowired Proxy pxy;
@@ -67,12 +76,21 @@ public class ProductController {
 		return map;
 	}
 	
+	@Transactional
 	@PostMapping("/phones")
 	public Map<?, ?> regist(
 			@RequestBody Product param) {
 		logger.info("=========프로덕트레지스터진입======");
 		System.out.println(param.toString());
-		IConsumer i = (Object o) -> prodMap.insertProduct((Product) param);	
+		
+		
+		IFunction j = s-> cateMap.txCategory((String) s);
+		IFunction j2 = s-> supMap.txSupplier((String) s);
+		String cateID= (String) j.apply(param.getCategoryID());
+		String suppID =(String) j2.apply(param.getSupplierID());
+		param.setCategoryID(cateID);
+		param.setSupplierID(suppID);
+		IConsumer i =  o -> prodMap.insertProduct((Product) o);	
 		i.accept(param);
 		map.clear();
 		map.put("s", "s");

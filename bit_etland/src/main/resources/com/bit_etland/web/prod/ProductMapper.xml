@@ -36,9 +36,33 @@
 	  WHERE no BETWEEN #{startRow} AND #{endRow};
   	
 	</select>
+	<select id="searchProducts" resultType="com.bit_etland.web.prod.Product" 
+	parameterType="com.bit_etland.web.cmm.Proxy">
+	SELECT R.*
+	FROM (SELECT DISTINCT @rownum:=@rownum+1 as no1,
+					P.PRODUCT_ID productID,
+					P.PRODUCT_NAME productName,
+					S.SUPPLIER_NAME supplierID,
+					C.CATEGORY_NAME categoryID,
+					P.UNIT,
+					P.PRICE
+	FROM PRODUCTS P JOIN SUPPLIERS S ON P.SUPPLIER_ID LIKE S.SUPPLIER_ID
+					 JOIN CATEGORIES C ON P.CATEGORY_ID LIKE C.CATEGORY_ID,(SELECT @rownum:=0) AS a
+	WHERE P.PRODUCT_NAME LIKE #{searchWord} OR SUPPLIER_NAME LIKE #{searchWord} OR ADDRESS LIKE #{searchWord} OR CATEGORY_NAME LIKE #{searchWord})R
+WHERE no1 BETWEEN #{startRow} AND #{endRow};	
+	
+	 
+  	
+	</select>
 	<select id="countProducts" resultType="Integer">
 	  SELECT COUNT(*)
   	  FROM PRODUCTS	  
+	</select>
+	<select id="countSearchProducts" resultType="Integer" parameterType="string">
+	  SELECT DISTINCT COUNT(*)
+	  FROM PRODUCTS P JOIN SUPPLIERS S ON P.SUPPLIER_ID LIKE S.SUPPLIER_ID
+					 JOIN CATEGORIES C ON P.CATEGORY_ID LIKE C.CATEGORY_ID
+	  WHERE P.PRODUCT_NAME LIKE #{searchword} OR SUPPLIER_NAME LIKE #{searchword} OR ADDRESS LIKE #{searchword} OR CATEGORY_NAME LIKE #{searchword}  
 	</select>
 	<insert
 		 id="insertProduct" 
