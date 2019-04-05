@@ -20,6 +20,9 @@
   <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script><!-- 상품등록 -->
   <script src="https://getbootstrap.com/docs/4.1/dist/js/bootstrap.min.js"></script>
   <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/holder.min.js"></script><!-- 상품목록 javascript끝 -->
+
+
+
   
   <style>
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
@@ -60,7 +63,7 @@
         <li><a href="#section3">Family</a></li>
         <li><a href="#section3">Photos</a></li>
       </ul><br>
-      <div class="input-group">
+      <div id="srch_grp" class="input-group">
         <input id="search_input" type="text" class="form-control" placeholder="상품 검색">
         <span class="input-group-btn">
           <button id="search_btn" class="btn btn-default" type="button">

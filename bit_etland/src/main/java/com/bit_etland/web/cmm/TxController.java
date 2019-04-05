@@ -41,12 +41,41 @@ public class TxController {
 		map.put("page_num", firstno);
 		map.put("page_size", "5");
 		map.put("blocksize", "5");
-		IFunction j = (o)-> prodMap.countSearchProducts((String) o);
+		IFunction j = (o)-> prodMap.countSearchProducts(a);
 		map.put("searchWord", a);
 		map.put("totalCount", (int)j.apply(a));
 		pxy.carryOut(map);
 		map.clear();
 		
+		System.out.println(pxy.getTotalCount()+"토탈카운트");
+		
+		IFunction i = s->prodMap.searchProducts((Proxy) s);
+		
+		@SuppressWarnings("unchecked")
+		List<Product> ls = (List<Product>)i.apply(pxy);
+		System.out.println(ls.toString());
+		map.clear();
+		map.put("ls", ls);
+		map.put("pxy",pxy);
+		return map;
+	}
+	@GetMapping("/trans/{searchID}/grid/{firstno}")
+	public Map<?, ?> transactionGrid(
+			@PathVariable String searchID,
+			@PathVariable String firstno
+			){
+		String a= "%"+searchID+"%";
+		map.clear();
+		map.put("page_num", firstno);
+		map.put("page_size", "9");
+		map.put("blocksize", "5");
+		IFunction j = (o)-> prodMap.countSearchProducts(a);
+		map.put("searchWord", a);
+		map.put("totalCount", (int)j.apply(a));
+		pxy.carryOut(map);
+		map.clear();
+		
+		System.out.println(pxy.getTotalCount()+"토탈카운트");
 		
 		IFunction i = s->prodMap.searchProducts((Proxy) s);
 		

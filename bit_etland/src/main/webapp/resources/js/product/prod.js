@@ -80,6 +80,28 @@ prod=(()=>{
 			});
 			
 		})
+		$('#img_upload_btn').click(function(e){
+			e.preventDefault();
+			/*let ok = (this.files[0].name.match(/jpg|gif|png|jpeg/i))?true:false;*/
+			let fd = new FormData();
+			fd.append('fil',this.files[0]);
+			alert(this.files[0])
+			$.ajax({
+				url : _+'/phones/files',
+				type:'POST',
+				data: fd,
+				async:false,
+				cache:false,
+				contentType:false,
+				processData:false,
+				success:d=>{
+				alert('파일업로드 성공')	
+				},
+				error:e=>{
+				alert('파일업로드 실패')
+				}
+			})
+		})
 		
 	};
 	let get=()=>{

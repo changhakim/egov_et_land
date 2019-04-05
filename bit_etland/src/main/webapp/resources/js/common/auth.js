@@ -33,6 +33,7 @@ auth = (()=>{
 	let setContentView=()=>{
 		firstnav();
 		$(r_cnt).html(compo.cust_login_form());
+		$('#srch_grp').hide();
 		$('form button[type=submit]').click(e=>{
 		e.preventDefault();
 		login(); 

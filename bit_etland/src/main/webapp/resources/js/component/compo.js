@@ -329,7 +329,7 @@ compo = {
 	prod_post:()=>{
 		return '<div class="col-md-8 order-md-1">'
 		+'          <h4 class="mb-3">상품등록</h4>'
-		+'          <form class="needs-validation" novalidate="">'
+		+'          <div class="needs-validation" novalidate="">'
 		+'            <div class="row">'
 		+'              <div class="col-md-6 mb-3">'
 		+'                <label for="firstName">카테고리</label>'
@@ -423,22 +423,29 @@ compo = {
 
 		+'            </div>'
 		+'            <div class="row">'
+		
 		+'              <div class="col-md-3 mb-3">'
+		+'				<form id="img_upload_form" encType="multipart/form-data">'
 		+'                <label for="cc-expiration">이미지등록(파일업로드)</label>'
 		+'                <input type="file" class="form-control" id="cc-expiration" placeholder="" required="">'
 		+'                <div class="invalid-feedback">'
 		+'                </div>'
+		+'				 <input type="submit" id="img_upload_btn" action="">'
+		+'				</form>'
 		+'              </div>'
+	
 		+'              <div class="col-md-3 mb-3">'
 		+'                <label for="cc-cvv">이미지등록(드래그&드랍)</label>'
 		+'                <input type="file" class="form-control" id="cc-cvv" placeholder="" required="">'
 		+'                <div class="invalid-feedback">'
 		+'                </div>'
+		+'				 <input type="submit" id="img_drag_btn">'
 		+'              </div>'
+	
 		+'            </div>'
 		+'            <hr class="mb-4">'
 		+'            <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>'
-		+'          </form>'
+		+'          </div>'
 		+'        </div>'
 		
 	},

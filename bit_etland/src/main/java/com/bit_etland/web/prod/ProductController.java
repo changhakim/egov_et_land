@@ -3,6 +3,8 @@ package com.bit_etland.web.prod;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bit_etland.web.cate.Category;
 import com.bit_etland.web.cate.CategoryMapper;
@@ -44,17 +47,9 @@ public class ProductController {
 	@Autowired Users<?> user;
 	@Autowired Map<String, Object> map;
 	@Autowired Proxy pxy;
-	@PostMapping("/phones/{userid}")
-	public Product login(
-			@PathVariable String userid,
-			@RequestBody Product param) {
-		logger.info("=========프로덕트진입======");
-		
-		IFunction i = (Object o) -> prodMap.selectProduct(param);
-		 
-		
-		return (Product) i.apply(param);
-	}
+	@Resource(name = "uploadPath")private String uploadPath;
+	
+	
 	
 	@SuppressWarnings("unchecked")
 	@GetMapping("/phones/page/{page}")
@@ -101,7 +96,7 @@ public class ProductController {
 			@PathVariable String userid,
 			@RequestBody Product param){
 		logger.info("=========프로덕트업데이트진입======");
-		System.out.println("프로덕트아이디"+param.getProductID());
+		
 		IConsumer i = (Object o) -> prodMap.updateProduct(param);;	
 		i.accept(param);
 		map.clear();
@@ -114,11 +109,18 @@ public class ProductController {
 			@PathVariable String userid,
 			@RequestBody Product param){
 		logger.info("=========삭제진입======");
-		System.out.println("커스토머아이디"+param.getProductID());
+		
 		IConsumer i = (Object o) -> prodMap.deleteProduct(param);;	
 		i.accept(param);
 		map.clear();
 		map.put("s", "s");
 		return map;
 	}
+	@PostMapping("phones/files")
+	public Map<?, ?> fileUpload(@RequestBody MultipartFile file)throws Exception{
+		ps.accept("넘어온 파일명"+file.getName());
+		ps.accept("파일저장경로:"+uploadPath);
+		return map;
+	}
+	
 }
